@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+  <head>
+      <title>Find fundraisers and nonprofits</title>
+  </head>
+  
+  <body>
+    <!-- Navigation bar with links to different sections of the website -->
+    <nav>
+      <a href="Home.html">Home</a>  | 
+      <a href="Search.html">Search</a> | 
+      <a href="Fundraisers.html">Fundraisers</a>
+    </nav>
+
+    <!-- Header section displaying the main title and introduction -->
+    <header>
+          <h1>Find fundraisers and nonprofits</h1>
+    </header>
+
+    <!-- Form to collect information for search -->
+    <form id="searchForm">
+        <div class="form">
+            <h3>Organizer:</h3>
+            <input type="text" id="organizer" placeholder="Enter Name" required> 
+
+            <h3>City:</h3>
+            <input type="text" id="city" placeholder="Enter City" required> 
+
+            <h3>Select a category：</h3>
+            <select id="category" required>
+                <option value="">Category</option>
+                <option value="1">Humanities</option>
+                <option value="2">Nature</option>
+                <option value="3">Scienc</option>
+            </select>
+
+            <h3>Active Status：</h3>
+            <select id="active" required>
+                <option value="">Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+            </select>
+        </div> 
+
+        <!-- button fot search and clear -->
+        <div class="button">
+            <button type="button" onclick="search()">Search</button>
+            <button type="button" onclick="clearCheckboxes()">Clear</button>
+        </div>
+    </form>
+
+    <!-- A div element to hold dynamically loaded fundraiser data -->
+    <div id="data"></div>
+
+    <!-- Footer section -->
+    <footer>The world needs more heroes!</footer>
+  </body>
+
+  <style>
+    /* General body styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+    /* Header section styles */
+    header {
+        background-color: #31c8c8;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+    
+    /* Navigation bar styles */
+    nav {
+        background-color: #ffffff;
+        padding: 5px;
+        border-radius: 5px;
+        text-align: right;
+    }
+
+    /* Styles for navigation links and any span elements */
+    nav span, nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Hover effect for navigation links */
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    /* Data section styling */
+    #data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; 
+        margin-top: 10px;
+    }
+
+    /* Styles for individual fundraiser boxes */
+    .box {
+        background: white;
+        padding: 15px;
+        width: calc(33.33% - 20px); 
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box; 
+        margin: auto;
+        text-align: center;
+    }
+
+    /* Styles for images inside fundraiser boxes */
+    .box img {
+        max-width: 100%;
+        border-radius: 5px;
+        margin: 10px 0px; 
+    }
+
+    /* Styles for individual error boxes */
+    .errorDiv {
+        background: white;
+        color: rgb(249, 0, 0);
+        padding: 15px;
+        width: calc(33.33% - 20px);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        margin: auto;
+        text-align: center;
+    }
+    /* Styles for form */
+    .form {
+        display: flex;    
+        margin-top: 30px;       
+        justify-content: center; 
+        gap: 20px;              
+    }
+    /* h3 element styles */
+    h3 {
+        margin: 0 2px;
+    }
+    /* Styles for button */
+    .button {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Footer styles */
+    footer {
+        position: fixed;
+        background-color: #31c8c8;
+        bottom: 0; 
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px; 
+        width: 100%;
+    }
+
+    
+  </style>
+</html>
+
+<script>
+    function searchByConditions(organizer, city, category, active) {
+        const url = `http://localhost:3060/SearchCondition?ORGANIZER=${organizer}&CITY=${city}&CATEGORY_ID=${category}&ACTIVE=${active}`;
+        fetch(url)
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                const dataDiv = document.getElementById('data'); // Get the data div to insert content
+                dataDiv.innerHTML = ""; // Clear any existing content in the div
+                // If there is donation data, fill the data into the box
+                if (data.length > 0) {
+                    data.forEach(fundraiser => {
+                        const boxDiv = document.createElement("div");
+                        const image = `image${fundraiser.FUNDRAISER_ID}.png`;
+                        boxDiv.classList.add("box");
+                        boxDiv.innerHTML = `
+                            <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
+                            <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                            <p>Caption: ${fundraiser.CAPTION}</p>
+                            <p>Target Funding: ${fundraiser.TARGET_FUNDING} AUD</p>
+                            <p>Current Funding: ${fundraiser.CURRENT_FUNDING} AUD</p>
+                            <p>City: ${fundraiser.CITY}</p>
+                            <p>Active: ${fundraiser.ACTIVE ? 'Yes' : 'No'}</p> 
+                            <p>Category: ${fundraiser.CATEGORY_NAME}</p>
+                            <img src="${image}" alt="Fundraiser Image for ${fundraiser.FUNDRAISER_ID}" />
+                        `;
+                        const newP2 = document.createElement("p");
+                        newP2.innerHTML = `<a href='Fundraisers?id=${fundraiser.FUNDRAISER_ID}'>More</a>`; //Hyperlink, leading to personal details page
+                        boxDiv.appendChild(newP2);
+                        dataDiv.appendChild(boxDiv);// Append the created div to the data div
+                    });
+                } else {
+                    // Display message if no data is returned
+                    const errorDiv = document.createElement("div");
+                    errorDiv.classList.add("errorDiv");
+                    errorDiv.textContent = "No fundraisers are found";
+                    dataDiv.appendChild(errorDiv);
+                }
+            })
+            // Error handling
+            .catch(error => {
+                console.error("Error fetching data", error);
+                document.getElementById('data').textContent = "Failed to load data";
+            });
+    }
+
+    // Function for the search button click event, retrieves user input for search
+    function search() {
+        const organizer = document.getElementById('organizer').value;
+        const city = document.getElementById('city').value;
+        const category = document.getElementById('category').value;
+        const active = document.getElementById('active').value;
+
+        // Check if at least one search condition is provided
+        if (!organizer && !city && !category && !active) {
+            alert("Please select at least one condition to search!");
+            return;
+        }
+
+        // Call the function to search based on the provided conditions
+        searchByConditions(organizer, city, category, active);
+    }
+
+    // Function to clear the search form inputs and reset the search results
+    function clearCheckboxes() {
+        document.getElementById('organizer').value = "";// Clear the organizer input field
+        document.getElementById('city').value = ""; // Clear the city input field
+        document.getElementById('category').selectedIndex = 0;   // Reset the category dropdown to the first option
+        document.getElementById('active').selectedIndex = 0;   // Reset the active status dropdown to the first option
+        document.getElementById('data').innerHTML = "";   // Clear the displayed search results
+    }
+
+</script>

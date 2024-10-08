@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<head>
+    <title>Help Each Other</title>
+</head>
+
+<body>
+    
+    <!-- Navigation bar with links to different sections of the website -->
+    <nav>
+        <a href="Home.html">Home</a> |
+        <a href="Search.html">Search</a> |
+        <a href="Fundraisers.html">Fundraisers</a>
+    </nav>
+    
+    <!-- Header section displaying the main title and introduction -->
+    <header>
+        <h1>Welcome to our charity donations website</h1>
+        <p>We are committed to helping those in need, and every donation can change lives. </p>
+    </header>
+    
+    <!-- A div element to hold dynamically loaded fundraiser data -->
+    <div id="data"></div>
+     
+    <!-- Footer section -->
+    <footer>The world needs more heroes!</footer>
+</body>
+
+<style>
+    /* General body styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
+
+     /* Header section styles */
+    header {
+        background-color: #31c8c8;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    /* h1 element styles */
+    h1 {
+        background-color: #31c8c8;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    /* Navigation bar styles */
+    nav {
+        background-color: #ffffff;
+        padding: 5px;
+        border-radius: 5px;
+        text-align: right;
+    }
+
+    /* Styles for navigation links and any span elements */
+    nav span,
+    nav a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    /* Hover effect for navigation links */
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    /* Data section styling */
+    #data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    /* Styles for individual fundraiser boxes */
+    .box {
+        background: white;
+        padding: 15px;
+        width: calc(33.33% - 20px);
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        margin: auto;
+        text-align: center;
+    }
+
+    /* Styles for images inside fundraiser boxes */
+    .box img {
+        max-width: 100%;
+        border-radius: 5px;
+        margin: 10px 0px; 
+    }
+
+    /* Footer styles */
+    footer {
+        position: fixed;
+        background-color: #31c8c8;
+        bottom: 0;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        width: 100%;
+    }
+</style>
+</html>
+
+<script>
+    // Fetch data from the server endpoint
+    fetch("http://localhost:3060/AllFundraiser")
+        .then(response => response.json()) // Parse the response as JSON
+        .then(data => {
+            const dataDiv = document.getElementById('data'); // Get the data div to insert content
+            dataDiv.innerHTML = ""; // Clear any existing content in the div
+            // If there is donation data, fill the data into the box
+            if (data.length > 0) {
+                data.forEach(fundraiser => {
+                    const boxDiv = document.createElement("div");
+                    const image = `image${fundraiser.FUNDRAISER_ID}.png`;
+                    boxDiv.classList.add("box");
+                    boxDiv.innerHTML = `
+                        <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
+                        <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                        <p>Caption: ${fundraiser.CAPTION}</p>
+                        <p>Target Funding: ${fundraiser.TARGET_FUNDING} AUD</p>
+                        <p>Current Funding: ${fundraiser.CURRENT_FUNDING} AUD</p>
+                        <p>City: ${fundraiser.CITY}</p>
+                        <p>Active: ${fundraiser.ACTIVE ? 'Yes' : 'No'}</p>
+                        <p>Category: ${fundraiser.CATEGORY_NAME}</p>
+                        <img src="${image}" alt="Fundraiser Image for ${fundraiser.FUNDRAISER_ID}" />
+                    `;
+
+                    dataDiv.appendChild(boxDiv); // Append the created div to the data div
+                });
+            } else {
+                dataDiv.textContent = "No fundraiser data"; // Display message if no data is returned
+            }
+        })
+        // Error handling
+        .catch(error => {
+            console.error("Error fetching data", error);
+            document.getElementById('data').textContent = "Failed to load data";
+        });
+</script>
