@@ -25,6 +25,10 @@ app.get("/Fundraisers",(req,res)=>{
   res.sendFile(path.join(__dirname,"Fundraisers.html"));
 });
 
+app.get("/Donation",(req,res)=>{
+  res.sendFile(path.join(__dirname,"Donation.html"));
+});
+
 app.listen(8080,()=>{
   console.log("Running in 8080");
 });
