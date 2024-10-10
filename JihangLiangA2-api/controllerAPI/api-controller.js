@@ -84,5 +84,44 @@ router.get("/SearchFundraiser/:id", (req, res) => {
     });
 });
 
+router.post("/addDonation", (req, res)=>{
+	var DONATION_ID = req.body.DONATION_ID;
+    var FUNDRAISER_ID = req.body.FUNDRAISER_ID
+    var DATE = req.body.DATE
+    var AMOUNT = req.body.AMOUNT
+    var GIVER = req.body.GIVER
+	connection.query("INSERT INTO DONATION VALUES("+DONATION_ID+","+FUNDRAISER_ID+","+DATE+","+AMOUNT+","+GIVER+")",
+	(err, result)=> {
+		 if (err){
+			 console.error("Error while retrieve the data" + err);
+		 }else{
+			 res.send({insert:"success"});
+		 }
+	})
+})
+
+router.post("/addFundraiser", (req, res)=>{
+	
+})
+
+router.put("/update", (req, res)=>{
+	
+})
+
+router.delete("delete/:id", (req, res)=>{
+    const query = `
+    SELECT f.FUNDRAISER_ID, f.ORGANIZER, f.CAPTION, f.TARGET_FUNDING, f.CURRENT_FUNDING, f.CITY, f.ACTIVE, c.NAME as CATEGORY_NAME 
+    FROM FUNDRAISER f
+    JOIN CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID
+    WHERE f.FUNDRAISER_ID = 
+`;
+	connection.query(query + "delete from FUNDRAISER where FUNDRAISER_ID=" + req.params.id, (err, records,fields)=> {
+		 if (err){
+			 console.error("Error while deleting the data");
+		 }else{
+			 res.send({delete:"Delete Sucess"});
+		 }
+	})
+})
 
 module.exports = router;
