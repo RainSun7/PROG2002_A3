@@ -96,23 +96,25 @@ router.get("/ShowDonation/:id", (req, res) => {
     });
 });
 
+router.post("/addDonation", (req, res) => {
+    
+    var DONATION_ID = req.body.DONATION_ID;
+    var FUNDRAISER_ID = req.body.FUNDRAISER_ID;
+    var DATE = req.body.DATE;
+    var AMOUNT = req.body.AMOUNT;
+    var GIVER = req.body.GIVER;
 
-router.post("/addDonation", (req, res)=>{
-    console.log(req.body); 
-	var DONATION_ID = req.body.DONATION_ID;
-    var FUNDRAISER_ID = req.body.FUNDRAISER_ID
-    var DATE = req.body.DATE
-    var AMOUNT = req.body.AMOUNT
-    var GIVER = req.body.GIVER
-	connection.query("INSERT INTO DONATION VALUES("+DONATION_ID+","+FUNDRAISER_ID+","+DATE+","+AMOUNT+","+GIVER+")",
-	(err, result)=> {
-		 if (err){
-			 console.error("Error while retrieve the data" + err);
-		 }else{
-			 res.send({insert:"success"});
-		 }
-	})
-})
+    const sql = `INSERT INTO DONATION (DONATION_ID, FUNDRAISER_ID, DATE, AMOUNT, GIVER) VALUES (${DONATION_ID}, ${FUNDRAISER_ID}, '${DATE}', ${AMOUNT}, '${GIVER}')`;
+
+    connection.query(sql, (err, result) => {
+        if (err){
+            console.error("Error while retrieve the data" + err);
+        }else{
+            res.send({insert:"success"});
+        }
+    });
+});
+
 
 router.post("/addFundraiser", (req, res)=>{
 	var FUNDRAISER_ID = req.body.FUNDRAISER_ID;
