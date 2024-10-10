@@ -84,7 +84,21 @@ router.get("/SearchFundraiser/:id", (req, res) => {
     });
 });
 
+router.get("/ShowDonation/:id", (req, res) => {
+    const query = "SELECT * FROM DONATION WHERE FUNDRAISER_ID = ?";
+    connection.query(query, req.params.id, (err, records) => {
+        if (err) {
+            console.error("Error Getting fundraiser info!", err);
+            res.status(500).send({ error: "Error Getting fundraiser info!" }); 
+        } else {
+            res.send(records);
+        }
+    });
+});
+
+
 router.post("/addDonation", (req, res)=>{
+    console.log(req.body); 
 	var DONATION_ID = req.body.DONATION_ID;
     var FUNDRAISER_ID = req.body.FUNDRAISER_ID
     var DATE = req.body.DATE

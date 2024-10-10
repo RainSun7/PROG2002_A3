@@ -20,6 +20,8 @@
     <!-- A div element to hold dynamically loaded fundraiser data -->
     <div id="data"></div>
 
+    <div id="data2"></div>
+
     <!-- A donate button -->
     <button id="donate" class="donate" onclick="donate()">Donate</button>
 
@@ -82,18 +84,27 @@
         margin-top: 10px;
     }
 
+    #data2 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
     /* Styles for individual fundraiser boxes */
     .box {
-        display: flex; 
-        background: white;
-        padding: 15px;
-        width: calc(55.33% 0px);
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-        margin: 50px;
-        text-align: left; 
-    }
+    display: flex;
+    background: white;
+    padding: 15px;
+    width: 55.33%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin: 50px auto; 
+    text-align: left;
+    justify-content: center; 
+    align-items: center; 
+}
 
     /* Styles for images inside fundraiser boxes */
     .box img {
@@ -129,8 +140,8 @@
     /* Styles for donate button */
     .donate {
         position: absolute;
-        right: 10%;
-        top: 60%;
+        right: 43%;
+        top: 85%;
         transform: translateY(-50%);
         padding: 10px 20px;
         background-color: #31c8c8;
@@ -195,8 +206,39 @@
         });
     // A function for the 'Donate' button that shows an alert
     function donate(){
-        alert('This feature is under construction');
+        window.location.href = '/Donation';
     }
+
+
+    
+    fetch(`http://localhost:3060/ShowDonation/${id}`)
+        .then(response => response.json()) // Parse the response as JSON
+        .then(data => {
+            const dataDiv = document.getElementById('data2'); // Get the data div to insert content
+            dataDiv.innerHTML = ""; // Clear any existing content in the div
+            // If there is donation data, fill the data into the box
+            if (data.length > 0) {
+                data.forEach(donation => {
+                    const boxDiv = document.createElement("div");
+                    boxDiv.classList.add("box");
+                    boxDiv.innerHTML = `
+                        <p>DONATION ID: ${donation.DONATION_ID}</p>
+                        <p>FUNDRAISER ID: ${donation.FUNDRAISER_ID}</p>
+                        <p>DATE: ${donation.DATE}</p>
+                        <p>AMOUNT: ${donation.AMOUNT} AUD</p>
+                        <p>GIVER: ${donation.GIVER} AUD</p>
+                    `;
+
+                    dataDiv.appendChild(boxDiv); // Append the created div to the data div
+                });
+            } 
+        })
+        // Error handling
+        .catch(error => {
+            console.error("Error fetching data", error);
+            document.getElementById('data').textContent = "Failed to load data";
+        });
+
 </script>
 
 </html>
