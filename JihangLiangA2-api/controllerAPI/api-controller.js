@@ -124,7 +124,8 @@ router.post("/addFundraiser", (req, res)=>{
     var CURRENT_FUNDING = req.body.CURRENT_FUNDING;
     var CITY = req.body.CITY;
     var ACTIVE = req.body.ACTIVE;
-    connection.query("INSERT INTO DONATION VALUES("+FUNDRAISER_ID+","+ORGANIZER+","+CAPTION+","+TARGET_FUNDING+","+CURRENT_FUNDING+","+CITY+","+ACTIVE+")",
+    var CATEGORY_NAME = req.body.CATEGORY_NAME;
+    connection.query("INSERT INTO DONATION VALUES("+FUNDRAISER_ID+","+ORGANIZER+","+CAPTION+","+TARGET_FUNDING+","+CURRENT_FUNDING+","+CITY+","+ACTIVE+","+CATEGORY_NAME+")",
 	(err, result)=> {
 		 if (err){
 			 console.error("Error while retrieve the data" + err);
@@ -171,6 +172,17 @@ router.put("/updateFundraise/:id", (req, res) => {
         }
     });
 });
+
+router.get("/showFundraiser", (req, res) => {
+    connection.query("SELECT * FROM FUNDRAISER", (err, records,fields) => {
+        if (err) {
+            console.error("Error getting category!", err);
+        } else {
+            res.send(records);
+        }
+    });
+});
+
 
 
 router.delete("/delete/:id", (req, res) => {
