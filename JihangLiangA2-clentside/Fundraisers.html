@@ -93,18 +93,18 @@
 
     /* Styles for individual fundraiser boxes */
     .box {
-    display: flex;
-    background: white;
-    padding: 15px;
-    width: 55.33%;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    margin: 50px auto; 
-    text-align: left;
-    justify-content: center; 
-    align-items: center; 
-}
+        display: flex;
+        background: white;
+        padding: 15px;
+        width: 55.33%;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        margin: 50px auto; 
+        text-align: left;
+        justify-content: center; 
+        align-items: center; 
+    }
 
     /* Styles for images inside fundraiser boxes */
     .box img {
@@ -158,6 +158,7 @@
 </style>
 
 <script>
+    let currentFundraiserId;
     // Get the URL parameters from the current window's location
     const params = new URLSearchParams(window.location.search);
     // Extract the 'id' parameter from the URL
@@ -175,6 +176,7 @@
                     const boxDiv = document.createElement("div");
                     const image = `image${fundraiser.FUNDRAISER_ID}.png`;
                     boxDiv.classList.add("box");
+                    currentFundraiserId = fundraiser.FUNDRAISER_ID;
                     boxDiv.innerHTML = `
                         <div>
                             <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
@@ -206,7 +208,7 @@
         });
     // A function for the 'Donate' button that shows an alert
     function donate(){
-        window.location.href = '/Donation';
+        window.location.href = `Donation?id=${currentFundraiserId}`;
     }
 
 
@@ -226,7 +228,7 @@
                         <p>FUNDRAISER ID: ${donation.FUNDRAISER_ID}</p>
                         <p>DATE: ${donation.DATE}</p>
                         <p>AMOUNT: ${donation.AMOUNT} AUD</p>
-                        <p>GIVER: ${donation.GIVER} AUD</p>
+                        <p>GIVER: ${donation.GIVER}</p>
                     `;
 
                     dataDiv.appendChild(boxDiv); // Append the created div to the data div

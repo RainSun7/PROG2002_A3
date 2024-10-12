@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <head>
     <title>Help Each Other</title>
 </head>
 
 <body>
-    
+
     <!-- Navigation bar with links to different sections of the website -->
     <nav>
         <a href="Home.html">Home</a> |
@@ -14,33 +15,34 @@
 
     <!-- Header section displaying the main title and introduction -->
     <header>
-        <h1>Welcome to our charity donations website</h1>
+        <h1>Support Our Fundraising Effirts and Make a Difference!</h1>
         <p>We are committed to helping those in need, and every donation can change lives. </p>
     </header>
+
+    <div id="data"></div>
 
     <form id="form" onsubmit="validateForm(); return(false);">
         <label>Donation ID</label>
         <input type="text" id="txtDONATION_ID" placeholder="Enter Donation ID" required><br>
-  
+
         <label>Fundraiser ID</label>
         <input type="text" id="txtFUNDRAISER_ID" placeholder="Enter Fundraiser ID" required><br>
 
         <label>Date</label>
         <input type="text" id="txtDATE" placeholder="Enter Date" required><br>
-  
+
         <label>Donation amount</label>
         <input type="text" id="txtAMOUNT" placeholder="Enter Donation amount" required><br>
-  
+
         <label>Giver</label>
         <input type="text" id="txtGIVER" placeholder="Enter Giver" required><br>
-  
-  
-        <input type="submit" value="Save" >
-        <input type="reset" value="Clear">
-      </form>
-     
+
+
+        <input type="submit" value="Submit my donation">
+    </form>
+
     <!-- Footer section -->
-    <footer>The world needs more heroes!</footer>
+    <footer>Thank you for your kindness and generosity! Together, we can bring hope and make a lasting difference for the future.</footer>
 </body>
 
 <style>
@@ -52,7 +54,7 @@
         background-color: #f9f9f9;
     }
 
-     /* Header section styles */
+    /* Header section styles */
     header {
         background-color: #31c8c8;
         color: white;
@@ -90,16 +92,79 @@
     nav a:hover {
         text-decoration: underline;
     }
-    
-    #form {
+
+    #data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .box {
+        display: flex;
         background: white;
-        padding: 15px;
-        width: calc(33.33% - 20px);
+        padding: 50px;
+        width: 60%;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
+        margin: 50px auto;
+        text-align: left;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 200px;
+        left: 3%;
+
+    }
+
+    .box img {
+        max-width: 500px;
+        border-radius: 5px;
+        margin-left: 15px;
+    }
+
+    #form {
+        background: white;
+        padding: 30px;
+        width: 350px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         margin: auto;
         text-align: center;
+        position: absolute;
+        top: 220px;
+        right: 3%;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+
+    input[type="submit"] {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #357ab8;
     }
 
     /* Footer styles */
@@ -114,22 +179,68 @@
         width: 100%;
     }
 </style>
+
 </html>
 
 <script>
-    function validateForm(){
-      const DONATION_ID = document.getElementById('txtDONATION_ID').value.trim();
-      const FUNDRAISER_ID = document.getElementById('txtFUNDRAISER_ID').value.trim();
-      const DATE = document.getElementById('txtDATE').value.trim();
-      const AMOUNT = document.getElementById('txtAMOUNT').value.trim();
-      const GIVER = document.getElementById('txtGIVER').value.trim();
-      
-      if (!DONATION_ID || !FUNDRAISER_ID || !DATE || !AMOUNT || !GIVER) {
+    let currentfundraiserName;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    fetch(`http://localhost:3060/SearchFundraiser/${id}`)
+        .then(response => response.json()) // Parse the response as JSON
+        .then(data => {
+            const dataDiv = document.getElementById('data'); // Get the data div to insert content
+            dataDiv.innerHTML = "";// Clear any existing content in the div
+            // If there is donation data, fill the data into the box
+            if (data.length > 0) {
+                data.forEach(fundraiser => {
+                    const boxDiv = document.createElement("div");
+                    const image = `image${fundraiser.FUNDRAISER_ID}.png`;
+                    boxDiv.classList.add("box");
+                    currentfundraiserName = fundraiser.ORGANIZER;
+                    boxDiv.innerHTML = `
+                        <div>
+                            <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
+                            <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                            <p>Caption: ${fundraiser.CAPTION}</p>
+                            <p>Target Funding: ${fundraiser.TARGET_FUNDING} AUD</p>
+                            <p>Current Funding: ${fundraiser.CURRENT_FUNDING} AUD</p>
+                            <p>City: ${fundraiser.CITY}</p>
+                            <p>Active: ${fundraiser.ACTIVE ? 'Yes' : 'No'}</p>
+                            <p>Category ID: ${fundraiser.CATEGORY_NAME}</p>
+                        </div>
+                        <img src="${image}" alt="Fundraiser Image for ${fundraiser.FUNDRAISER_ID}" />
+                  `;
+
+                    dataDiv.appendChild(boxDiv);// Append the created div to the data div
+                });
+            }
+        })
+        // Error handling
+        .catch(error => {
+            console.error("Error fetching data", error);
+            document.getElementById('data').textContent = "Failed to load data";
+        });
+
+
+    function validateForm() {
+        const DONATION_ID = document.getElementById('txtDONATION_ID').value.trim();
+        const FUNDRAISER_ID = document.getElementById('txtFUNDRAISER_ID').value.trim();
+        const DATE = document.getElementById('txtDATE').value.trim();
+        const AMOUNT = document.getElementById('txtAMOUNT').value.trim();
+        const GIVER = document.getElementById('txtGIVER').value.trim();
+
+        if (!DONATION_ID || !FUNDRAISER_ID || !DATE || !AMOUNT || !GIVER) {
             alert("All fields are required!");
             return;
         }
-        const postData = { 'DONATION_ID':DONATION_ID, 'FUNDRAISER_ID':FUNDRAISER_ID, 'DATE':DATE, 'AMOUNT':AMOUNT, 'GIVER':GIVER };
-  
+        if (AMOUNT < 5) {
+            alert("The minimum donation amount is 5 AUD!.");
+            return;
+        }
+        const postData = { 'DONATION_ID': DONATION_ID, 'FUNDRAISER_ID': FUNDRAISER_ID, 'DATE': DATE, 'AMOUNT': AMOUNT, 'GIVER': GIVER };
+
         fetch('http://localhost:3060/addDonation', {
             method: 'POST',
             headers: {
@@ -137,17 +248,18 @@
             },
             body: JSON.stringify(postData)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.insert === 'success') {
-                alert("Concert added successfully!");
-                document.getElementById('form').reset();                 
-            } else if (data.insert === 'error') {
-                alert("Error: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.insert === 'success') {
+                    alert(`Thank you for your donation to ${currentfundraiserName}!`);
+                    window.location.href = `Fundraisers?id=${FUNDRAISER_ID}`;
+                    document.getElementById('form').reset();
+                } else if (data.insert === 'error') {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     }
-  </script>
+</script>
