@@ -6,21 +6,19 @@
 
 <body>
 
-    <!-- Navigation bar with links to different sections of the website -->
-    <nav>
-        <a href="Home.html">Home</a> |
-        <a href="Search.html">Search</a> |
-        <a href="Fundraisers.html">Fundraisers</a> |
-        <a href="Admin.html">Admin</a>
-    </nav>
-
-    <!-- Header section displaying the main title and introduction -->
+    <!-- Header section displaying the main title and integrated navigation -->
     <header>
         <h1>Management Page</h1>
+        <nav>
+            <a href="Home.html">Home</a> |
+            <a href="Search.html">Search</a> |
+            <a href="Fundraisers.html">Fundraisers</a> |
+            <a href="Admin.html">Admin</a>
+        </nav>
     </header>
-    
+
     <form id="form" onsubmit="validateForm(); return(false);">
-        <p>Add New Fundraiser </p>
+        <h3>Add New Fundraiser </h3>
         <div class="form-row">
             <div class="form-group">
                 <label>Fundraiser ID</label>
@@ -74,86 +72,55 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 20px;
-        background-color: #f9f9f9;
+        background-color: #f3f4f6;
     }
 
-    /* Header section styles */
+    /* Header section styles with integrated navigation */
     header {
-        background-color: #31c8c8;
+        background: linear-gradient(135deg, #31c8c8, #2196f3);
         color: white;
         padding: 10px;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 10px;
     }
 
     /* h1 element styles */
     h1 {
-        background-color: #31c8c8;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px;
+        font-size: 2.5em;
+        margin-bottom: 10px;
     }
 
-    /* Navigation bar styles */
+    /* Navigation bar styles integrated into header */
     nav {
-        background-color: #ffffff;
-        padding: 5px;
-        border-radius: 5px;
-        text-align: right;
+        background-color: transparent;
+        padding: 10px 0;
+        text-align: center;
+        margin-bottom: 0;
     }
 
-    /* Styles for navigation links and any span elements */
-    nav span,
+    /* Styles for navigation links */
     nav a {
-        margin: 0 10px;
+        margin: 0 20px;
         text-decoration: none;
-        color: #333;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1em;
     }
 
     /* Hover effect for navigation links */
     nav a:hover {
-        text-decoration: underline;
+        color: #ffeb3b;
     }
 
-    /* Data section styling */
-    #data {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 10px;
-    }
-
-    /* Styles for individual fundraiser boxes */
-    .box {
-        background: white;
-        padding: 15px;
-        width: calc(33.33% - 20px);
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-        margin: auto;
-        text-align: center;
-    }
-
-    /* Styles for images inside fundraiser boxes */
-    .box img {
-        max-width: 100%;
-        border-radius: 5px;
-        margin: 10px 0px;
-    }
-
+    /* Form container styles */
     #form {
         background: white;
-        padding: 20px;
-        /* Adjusted for compactness */
+        padding: 30px;
         width: 100%;
-        /* Make it responsive */
-        max-width: 1420px;
-        /* Max width for larger screens */
-        border-radius: 50px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        margin: 10px;
+        max-width: 1200px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin: 0 auto 20px;
         text-align: center;
     }
 
@@ -162,76 +129,83 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 15px;
-        /* Space between rows */
+        flex-wrap: wrap;
     }
 
     /* Styling for each form group */
     .form-group {
         flex: 1;
-        /* Make all inputs take equal space */
         margin: 0 10px;
-        /* Margin between inputs */
+        max-width: calc(50% - 20px);
+        margin-bottom: 20px;
     }
 
-    /* Ensure that the last input in a row doesn't have extra margin */
-    .form-group:last-child {
-        margin-right: 0;
-    }
-
+    /* Label and input styling */
     label {
         display: block;
-        /* Makes the label above the input */
-        margin-bottom: 5px;
-        /* Space between label and input */
+        margin-bottom: 8px;
+        font-weight: bold;
     }
 
-    /* Input field styles */
     input[type="text"] {
         width: 100%;
-        /* Full width of the parent */
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
         box-sizing: border-box;
-        transition: border-color 0.3s;
+        transition: border-color 0.3s ease;
     }
 
     input[type="text"]:focus {
-        border-color: #4a90e2;
+        border-color: #2196f3;
         outline: none;
     }
 
     /* Submit button styles */
     input[type="submit"] {
-        background-color: #4a90e2;
+        background-color: #2196f3;
         color: white;
         border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
+        padding: 12px 25px;
+        border-radius: 8px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s ease;
+        font-size: 1em;
         font-weight: bold;
         margin-top: 20px;
-        /* Space above the button */
     }
 
     input[type="submit"]:hover {
-        background-color: #357ab8;
+        background-color: #31c8c8;
+    }
+
+    /* Data section styling */
+    #data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 20px;
+        justify-content: center;
     }
 
     /* Footer styles */
     footer {
-        position: fixed;
         background-color: #31c8c8;
-        bottom: 0;
         color: white;
-        padding: 10px;
+        padding: 15px;
         text-align: center;
-        border-radius: 5px;
+        position: fixed;
+        bottom: 0;
         width: 100%;
     }
-</style>
 
+    /* Form group styles for responsiveness */
+    @media screen and (max-width: 768px) {
+        .form-group {
+            max-width: 100%;
+        }
+    }
+</style>
 </html>
 
 <script>
