@@ -1,55 +1,69 @@
 <!DOCTYPE html>
+
 <head>
     <title>Help Each Other</title>
 </head>
 
 <body>
-    
+
     <!-- Navigation bar with links to different sections of the website -->
     <nav>
         <a href="Home.html">Home</a> |
         <a href="Search.html">Search</a> |
-        <a href="Fundraisers.html">Fundraisers</a>
+        <a href="Fundraisers.html">Fundraisers</a> |
+        <a href="Admin.html">Admin</a>
     </nav>
-    
+
     <!-- Header section displaying the main title and introduction -->
     <header>
-        <h1>Welcome to our charity donations website</h1>
-        <p>We are committed to helping those in need, and every donation can change lives. </p>
+        <h1>Management Page</h1>
     </header>
-
+    
     <form id="form" onsubmit="validateForm(); return(false);">
-        <label>Fundraiser ID</label>
-        <input type="text" id="txtFUNDRAISER_ID" placeholder="Enter Fundraiser ID" required><br>
-
-        <label>Organizer</label>
-        <input type="text" id="txtORGANIZER" placeholder="Enter Organizer" required><br>
-
-        <label>Caption</label>
-        <input type="text" id="txtCAPTION" placeholder="Enter Caption" required><br>
-
-        <label>Target Funding</label>
-        <input type="text" id="txtTARGET_FUNDING" placeholder="Enter Target Funding" required><br>
-
-        <label>Current Funding</label>
-        <input type="text" id="txtCURRENT_FUNDING" placeholder="Enter Current Funding" required><br>
-
-        <label>City</label>
-        <input type="text" id="txtCITY" placeholder="Enter City" required><br>
-
-        <label>Active</label>
-        <input type="text" id="txtACTIVE" placeholder="Enter Active" required><br>
-
-        <label>Category</label>
-        <input type="text" id="txtCATEGORY_NAME" placeholder="Enter Category Name" required><br>
-
-
+        <p>Add New Fundraiser </p>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Fundraiser ID</label>
+                <input type="text" id="addFUNDRAISER_ID" placeholder="Enter Fundraiser ID" required>
+            </div>
+            <div class="form-group">
+                <label>Organizer</label>
+                <input type="text" id="addORGANIZER" placeholder="Enter Organizer" required>
+            </div>
+            <div class="form-group">
+                <label>Caption</label>
+                <input type="text" id="addCAPTION" placeholder="Enter Caption" required>
+            </div>
+            <div class="form-group">
+                <label>Target Funding</label>
+                <input type="text" id="addTARGET_FUNDING" placeholder="Enter Target Funding" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Current Funding</label>
+                <input type="text" id="addCURRENT_FUNDING" placeholder="Enter Current Funding" required>
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" id="addCITY" placeholder="Enter City" required>
+            </div>
+            <div class="form-group">
+                <label>Active</label>
+                <input type="text" id="addACTIVE" placeholder="Enter Active (1 or 0)" required>
+            </div>
+            <div class="form-group">
+                <label>CATEGORY ID</label>
+                <input type="text" id="addCATEGORY_ID" placeholder="Enter Category ID" required>
+            </div>
+        </div>
         <input type="submit" value="Save">
     </form>
-    
+
+
     <!-- A div element to hold dynamically loaded fundraiser data -->
     <div id="data"></div>
-     
+
     <!-- Footer section -->
     <footer>The world needs more heroes!</footer>
 </body>
@@ -63,7 +77,7 @@
         background-color: #f9f9f9;
     }
 
-     /* Header section styles */
+    /* Header section styles */
     header {
         background-color: #31c8c8;
         color: white;
@@ -126,7 +140,83 @@
     .box img {
         max-width: 100%;
         border-radius: 5px;
-        margin: 10px 0px; 
+        margin: 10px 0px;
+    }
+
+    #form {
+        background: white;
+        padding: 20px;
+        /* Adjusted for compactness */
+        width: 100%;
+        /* Make it responsive */
+        max-width: 1420px;
+        /* Max width for larger screens */
+        border-radius: 50px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        text-align: center;
+    }
+
+    /* Styling for each row */
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        /* Space between rows */
+    }
+
+    /* Styling for each form group */
+    .form-group {
+        flex: 1;
+        /* Make all inputs take equal space */
+        margin: 0 10px;
+        /* Margin between inputs */
+    }
+
+    /* Ensure that the last input in a row doesn't have extra margin */
+    .form-group:last-child {
+        margin-right: 0;
+    }
+
+    label {
+        display: block;
+        /* Makes the label above the input */
+        margin-bottom: 5px;
+        /* Space between label and input */
+    }
+
+    /* Input field styles */
+    input[type="text"] {
+        width: 100%;
+        /* Full width of the parent */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+
+    /* Submit button styles */
+    input[type="submit"] {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+        margin-top: 20px;
+        /* Space above the button */
+    }
+
+    input[type="submit"]:hover {
+        background-color: #357ab8;
     }
 
     /* Footer styles */
@@ -141,9 +231,13 @@
         width: 100%;
     }
 </style>
+
 </html>
 
 <script>
+
+    let currentFundraiserId;
+
     // Fetch data from the server endpoint
     fetch("http://localhost:3060/showFundraiser")
         .then(response => response.json()) // Parse the response as JSON
@@ -157,16 +251,18 @@
                     const image = `image${fundraiser.FUNDRAISER_ID}.png`;
                     boxDiv.classList.add("box");
                     boxDiv.innerHTML = `
-                        <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
-                        <p>Organizer: ${fundraiser.ORGANIZER}</p>
-                        <p>Caption: ${fundraiser.CAPTION}</p>
-                        <p>Target Funding: ${fundraiser.TARGET_FUNDING} AUD</p>
-                        <p>Current Funding: ${fundraiser.CURRENT_FUNDING} AUD</p>
-                        <p>City: ${fundraiser.CITY}</p>
-                        <p>Active: ${fundraiser.ACTIVE ? 'Yes' : 'No'}</p>
-                        <p>Category: ${fundraiser.CATEGORY_NAME}</p>
-                        <img src="${image}" alt="Fundraiser Image for ${fundraiser.FUNDRAISER_ID}" />
-                    `;
+                    <p>Fundraiser ID: ${fundraiser.FUNDRAISER_ID}</p>
+                    <p>Organizer: ${fundraiser.ORGANIZER}</p>
+                    <p>Caption: ${fundraiser.CAPTION}</p>
+                    <p>Target Funding: ${fundraiser.TARGET_FUNDING} AUD</p>
+                    <p>Current Funding: ${fundraiser.CURRENT_FUNDING} AUD</p>
+                    <p>City: ${fundraiser.CITY}</p>
+                    <p>Active: ${fundraiser.ACTIVE ? 'Yes' : 'No'}</p>
+                    <p>Category: ${fundraiser.CATEGORY_NAME}</p>
+                    <img src="${image}" alt="Fundraiser Image for ${fundraiser.FUNDRAISER_ID}" />
+                    <button onclick="update(${fundraiser.FUNDRAISER_ID})">Update</button>
+                    <button onclick="deleteByID(${fundraiser.FUNDRAISER_ID})">Delete</button>
+                `;
 
                     dataDiv.appendChild(boxDiv); // Append the created div to the data div
                 });
@@ -180,21 +276,26 @@
             document.getElementById('data').textContent = "Failed to load data";
         });
 
-        function validateForm() {
-        const FUNDRAISER_ID = document.getElementById('txtFUNDRAISER_ID').value.trim();
-        const ORGANIZER = document.getElementById('txtORGANIZER').value.trim();
-        const CAPTION = document.getElementById('txtCAPTION').value.trim();
-        const TARGET_FUNDING = document.getElementById('txtTARGET_FUNDING').value.trim();
-        const CURRENT_FUNDING = document.getElementById('txtCURRENT_FUNDING').value.trim();
-        const CITY = document.getElementById('txtCITY').value.trim();
-        const ACTIVE = document.getElementById('txtACTIVE').value.trim();
-        const CATEGORY_NAME = document.getElementById('txtCATEGORY_NAME').value.trim();
+    function update(fundraiserId) {
+        window.location.href = `Update?id=${fundraiserId}`;
+    }
 
-        if (!FUNDRAISER_ID || !ORGANIZER || !CAPTION || !TARGET_FUNDING || !CURRENT_FUNDING || !CITY || !ACTIVE || !CATEGORY_NAME) {
+
+    function validateForm() {
+        const FUNDRAISER_ID = document.getElementById('addFUNDRAISER_ID').value.trim();
+        const ORGANIZER = document.getElementById('addORGANIZER').value.trim();
+        const CAPTION = document.getElementById('addCAPTION').value.trim();
+        const TARGET_FUNDING = document.getElementById('addTARGET_FUNDING').value.trim();
+        const CURRENT_FUNDING = document.getElementById('addCURRENT_FUNDING').value.trim();
+        const CITY = document.getElementById('addCITY').value.trim();
+        const ACTIVE = document.getElementById('addACTIVE').value.trim();
+        const CATEGORY_ID = document.getElementById('addCATEGORY_ID').value.trim();
+
+        if (!FUNDRAISER_ID || !ORGANIZER || !CAPTION || !TARGET_FUNDING || !CURRENT_FUNDING || !CITY || !ACTIVE || !CATEGORY_ID) {
             alert("All fields are required!");
             return;
         }
-        const postData = { 'FUNDRAISER_ID': FUNDRAISER_ID, 'ORGANIZER': ORGANIZER, 'CAPTION': CAPTION, 'TARGET_FUNDING': TARGET_FUNDING, 'CURRENT_FUNDING': CURRENT_FUNDING, 'CITY': CITY, 'ACTIVE': ACTIVE, 'CATEGORY_NAME': CATEGORY_NAME};
+        const postData = { 'FUNDRAISER_ID': FUNDRAISER_ID, 'ORGANIZER': ORGANIZER, 'CAPTION': CAPTION, 'TARGET_FUNDING': TARGET_FUNDING, 'CURRENT_FUNDING': CURRENT_FUNDING, 'CITY': CITY, 'ACTIVE': ACTIVE, 'CATEGORY_ID': CATEGORY_ID };
 
         fetch('http://localhost:3060/addFundraiser', {
             method: 'POST',
@@ -216,4 +317,27 @@
                 console.error("Error:", error);
             });
     }
+
+    function deleteByID(id) {
+        fetch(`http://localhost:3060/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.delete);
+                if (data.delete === 'Delete Success') {
+                    alert("Fundraiser deleted successfully!");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+
+
 </script>
