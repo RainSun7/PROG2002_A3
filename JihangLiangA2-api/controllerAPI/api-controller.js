@@ -160,7 +160,13 @@ router.put("/updateFundraise/:id", (req, res) => {
 });
 
 router.get("/showFundraiser", (req, res) => {
-    connection.query("SELECT * FROM FUNDRAISER", (err, records, fields) => {
+    const query = `
+        SELECT F.FUNDRAISER_ID,F.ORGANIZER,F.CAPTION,F.TARGET_FUNDING,F.CURRENT_FUNDING,F.CITY,F.ACTIVE,
+        C.NAME AS CATEGORY_NAME
+        FROM FUNDRAISER F
+        LEFT JOIN CATEGORY C ON F.CATEGORY_ID = C.CATEGORY_ID
+    `;
+    connection.query(query, (err, records, fields) => {
         if (err) {
             console.error("Error getting category!", err);
         } else {
@@ -169,14 +175,14 @@ router.get("/showFundraiser", (req, res) => {
     });
 });
 
-router.delete("/delete/:id", (req, res)=>{
-	connection.query("delete from FUNDRAISER where FUNDRAISER_ID=" + req.params.id, (err, records,fields)=> {
-		 if (err){
-			 console.error("Error while deleting the data");
-		 }else{
-			 res.send({delete:"Delete Sucess"});
-		 }
-	})
+router.delete("/delete/:id", (req, res) => {
+    connection.query("delete from FUNDRAISER where FUNDRAISER_ID=" + req.params.id, (err, records, fields) => {
+        if (err) {
+            console.error("Error while deleting the data");
+        } else {
+            res.send({ delete: "Delete Sucess" });
+        }
+    })
 })
 
 module.exports = router;

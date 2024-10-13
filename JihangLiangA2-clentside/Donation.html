@@ -6,18 +6,16 @@
 
 <body>
 
-    <!-- Navigation bar with links to different sections of the website -->
+    <!-- Header section displaying the main title and introduction -->
+    <header>
+        <h1>Support Our Fundraising Effirts and Make a Difference!</h1>
+        <!-- Navigation bar with links to different sections of the website -->
     <nav>
         <a href="Home.html">Home</a> |
         <a href="Search.html">Search</a> |
         <a href="Fundraisers.html">Fundraisers</a> |
         <a href="Admin.html">Admin</a>
     </nav>
-
-    <!-- Header section displaying the main title and introduction -->
-    <header>
-        <h1>Support Our Fundraising Effirts and Make a Difference!</h1>
-        <p>We are committed to helping those in need, and every donation can change lives. </p>
     </header>
 
     <div id="data"></div>
@@ -59,9 +57,26 @@
     header {
         background-color: #31c8c8;
         color: white;
-        padding: 10px;
+        padding: 5px 0;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 0 0 20px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    header p {
+        line-height: 1.2;
+        margin: 0;
     }
 
     /* h1 element styles */
@@ -75,24 +90,27 @@
 
     /* Navigation bar styles */
     nav {
-        background-color: #ffffff;
-        padding: 5px;
-        border-radius: 5px;
-        text-align: right;
+        margin-top: 10px;
+        /* Space between header and nav */
     }
 
-    /* Styles for navigation links and any span elements */
-    nav span,
     nav a {
-        margin: 0 10px;
+        margin: 0 15px;
+        /* Space between links */
         text-decoration: none;
-        color: #333;
+        color: white;
+        /* White text color for nav links */
+        font-weight: bold;
+        /* Bold font for emphasis */
+        transition: color 0.3s;
+        /* Smooth transition for hover effect */
     }
 
-    /* Hover effect for navigation links */
     nav a:hover {
-        text-decoration: underline;
+        color: #ffeb3b;
+        /* Highlight color on hover */
     }
+
 
     #data {
         display: flex;
@@ -114,7 +132,7 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        top: 200px;
+        top: 140px;
         left: 3%;
 
     }
@@ -134,7 +152,7 @@
         margin: auto;
         text-align: center;
         position: absolute;
-        top: 220px;
+        top: 140px;
         right: 3%;
     }
 
