@@ -29,14 +29,6 @@ app.get("/Donation",(req,res)=>{
   res.sendFile(path.join(__dirname,"Donation.html"));
 });
 
-app.get("/Admin",(req,res)=>{
-  res.sendFile(path.join(__dirname,"Admin.html"));
-});
-
-app.get("/Update",(req,res)=>{
-  res.sendFile(path.join(__dirname,"Update.html"));
-});
-
 app.listen(8080,()=>{
   console.log("Running in 8080");
 });
