@@ -233,10 +233,12 @@
 </html>
 
 <script>
+    // Create a URLSearchParams object to extract query parameters from the URL
     const params = new URLSearchParams(window.location.search);
     // Extract the 'id' parameter from the URL
     const id = params.get('id');
 
+    // Fetch donation data associated with the fundraiser ID from the server
     fetch(`http://localhost:3060/ShowDonation/${id}`)
         .then(response => response.json()) // Parse the response as JSON
         .then(data => {
@@ -265,6 +267,7 @@
             document.getElementById('data').textContent = "Failed to load data";
         });
 
+    // Function to update a fundraiser's details by sending a PUT request to the server
     function updateFundraiser() {
         const FUNDRAISER_ID = document.getElementById('updateFUNDRAISER_ID').value.trim();
         const ORGANIZER = document.getElementById('updateORGANIZER').value.trim();
@@ -282,6 +285,7 @@
 
         const postData = { 'FUNDRAISER_ID': FUNDRAISER_ID, 'ORGANIZER': ORGANIZER, 'CAPTION': CAPTION, 'TARGET_FUNDING': TARGET_FUNDING, 'CURRENT_FUNDING': CURRENT_FUNDING, 'CITY': CITY, 'ACTIVE': ACTIVE, 'CATEGORY_ID': CATEGORY_ID };
 
+        // Send a PUT request to update the fundraiser with the specified ID
         fetch(`http://localhost:3060/updateFundraise/${FUNDRAISER_ID}`, {
             method: 'PUT',
             headers: {

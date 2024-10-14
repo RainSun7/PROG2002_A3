@@ -293,12 +293,14 @@
             document.getElementById('data').textContent = "Failed to load data";
         });
 
+     // Function to redirect the user to the update page for a specific fundraiser
     function update(fundraiserId) {
         window.location.href = `Update?id=${fundraiserId}`;
     }
 
-
+    // Function to validate the form and submit data to add a new fundraiser
     function validateForm() {
+        // Get values from input fields and remove extra spaces
         const FUNDRAISER_ID = document.getElementById('addFUNDRAISER_ID').value.trim();
         const ORGANIZER = document.getElementById('addORGANIZER').value.trim();
         const CAPTION = document.getElementById('addCAPTION').value.trim();
@@ -308,12 +310,15 @@
         const ACTIVE = document.getElementById('addACTIVE').value.trim();
         const CATEGORY_ID = document.getElementById('addCATEGORY_ID').value.trim();
 
+        // Check if any required fields are empty, and alert the user if so
         if (!FUNDRAISER_ID || !ORGANIZER || !CAPTION || !TARGET_FUNDING || !CURRENT_FUNDING || !CITY || !ACTIVE || !CATEGORY_ID) {
             alert("All fields are required!");
             return;
         }
+        // Create an object with the form data to be sent in the request
         const postData = { 'FUNDRAISER_ID': FUNDRAISER_ID, 'ORGANIZER': ORGANIZER, 'CAPTION': CAPTION, 'TARGET_FUNDING': TARGET_FUNDING, 'CURRENT_FUNDING': CURRENT_FUNDING, 'CITY': CITY, 'ACTIVE': ACTIVE, 'CATEGORY_ID': CATEGORY_ID };
 
+        // Send a POST request to the server to add the new fundraiser
         fetch('http://localhost:3060/addFundraiser', {
             method: 'POST',
             headers: {
@@ -335,6 +340,7 @@
             });
     }
 
+    // Function to delete a fundraiser by its ID
     function deleteByID(id) {
         fetch(`http://localhost:3060/delete/${id}`, {
             method: 'DELETE',

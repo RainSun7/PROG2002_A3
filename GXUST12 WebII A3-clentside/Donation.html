@@ -19,6 +19,7 @@
 
     <div id="data"></div>
 
+     <!-- Donation form section -->
     <form id="form" onsubmit="validateForm(); return(false);">
         <label>Donation ID</label>
         <input type="text" id="txtDONATION_ID" placeholder="Enter Donation ID" required><br>
@@ -205,6 +206,7 @@
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
+    // Fetch fundraiser data based on the 'id'
     fetch(`http://localhost:3060/SearchFundraiser/${id}`)
         .then(response => response.json()) // Parse the response as JSON
         .then(data => {
@@ -242,6 +244,7 @@
         });
 
 
+    // Function to validate the form inputs and handle the submission
     function validateForm() {
         const DONATION_ID = document.getElementById('txtDONATION_ID').value.trim();
         const FUNDRAISER_ID = document.getElementById('txtFUNDRAISER_ID').value.trim();
@@ -258,7 +261,8 @@
             return;
         }
         const postData = { 'DONATION_ID': DONATION_ID, 'FUNDRAISER_ID': FUNDRAISER_ID, 'DATE': DATE, 'AMOUNT': AMOUNT, 'GIVER': GIVER };
-
+        
+        // Send a POST request to submit the donation
         fetch('http://localhost:3060/addDonation', {
             method: 'POST',
             headers: {
